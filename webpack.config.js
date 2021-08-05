@@ -1,16 +1,3 @@
-const replaceImportReferencePlugin = (opts = {}) => ({
-  postcssPlugin: 'remove-reference',
-
-  AtRule(rule) {
-    // Replace (reference) imports with default behavior.
-    if (rule.name === 'import') {
-      rule.params = rule.params.replace(/\(reference\) /g, '');
-    }
-  },
-});
-
-replaceImportReferencePlugin.postcss = true;
-
 module.exports = {
   entry: {
     home: ['./index.js', './index.less'],
@@ -35,11 +22,15 @@ module.exports = {
               postcssOptions: {
                 syntax: require('postcss-less'),
                 plugins: [
-                  replaceImportReferencePlugin(),
                   require('postcss-import')({
-                    plugins: [
-                      replaceImportReferencePlugin(),
-                    ],
+                    interceptAtRule(atRule) {
+                      // Remove the reference tag.
+                      atRule.params = atRule.params.replace(
+                        /\(reference\) /g,
+                        ''
+                      );
+                      atRule.prev = () => false;
+                    },
                   }),
                 ],
               },

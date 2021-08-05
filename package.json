@@ -13,7 +13,7 @@
     "less": "^4.1.1",
     "less-loader": "^10.0.1",
     "postcss": "^8.3.6",
-    "postcss-import": "^14.0.2",
+    "postcss-import": "github:tbranyen/postcss-import#allow-intercept-and-skip",
     "postcss-less": "^5.0.0",
     "postcss-loader": "^6.1.1",
     "webpack": "^5.48.0",
